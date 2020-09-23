@@ -1,0 +1,26 @@
+import java.io.*;
+import java.util.regex.Pattern;
+
+
+public class Solution {
+    public static void main(String[] args) throws IOException {
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        BufferedReader read = new BufferedReader(new FileReader(reader.readLine()));
+        BufferedWriter writer = new BufferedWriter(new FileWriter(reader.readLine()));
+        String s;
+        Pattern p = Pattern.compile("\\s+", Pattern.UNICODE_CHARACTER_CLASS);
+
+        while ((s =read.readLine()) != null){
+            s = s.replaceAll("[\\n\\t\\f\\r,!\".@#$%|{}^\\[\\]&*()/\\\\=]", " ");
+            s = s.trim();
+            String[] array = p.split(s);
+            for(String str: array){
+                if(Pattern.matches("\\b\\d+\\b", str)){
+                writer.write(str + " ");}
+            }
+        }
+        reader.close();
+        read.close();
+        writer.close();
+    }
+}
