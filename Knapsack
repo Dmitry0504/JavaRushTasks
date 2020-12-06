@@ -1,0 +1,82 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+//класс описывающий рюкзак
+public class Knapsack {
+    //вместимость рюкзака
+    int capacity;
+    //помещенные в рюкзак предметы
+    List<Item> items = new ArrayList<>();
+    //конструктор класса
+    Knapsack(int capacity){
+        this.capacity = capacity;
+    }
+
+    //внутренний класс описывающий предметы
+    static class Item{
+        //имя предмета
+        String name;
+        //цена
+        int price;
+        //вес
+        int weight;
+        //конструктор класса
+        Item(String name, int price, int weight){
+            this.name = name;
+            this.price = price;
+            this.weight = weight;
+        }
+        //переопределяем метод для отображения необходимой нам информации при проверке результата
+        @Override
+        public String toString() {
+            return "Item{" + name +
+                    price/weight +
+                    '}';
+        }
+    }
+    //метод возвращает начальный набор предметов отсортированный в порядке уменьщения стоимости за единицу веса
+    public List<Item> getList() {
+        Item gitara = new Item("Гитара",100, 10);
+        Item kruzhka = new Item("Кружка",20, 1);
+        Item ruchka = new Item("Ручка",25, 5);
+        Item butilka = new Item("Бутылка", 16, 2);
+        Item igrushka = new Item("Игрушка", 3, 1);
+        Item chasi = new Item("Часы",25, 2);
+        Item fruit = new Item("Фрукт",10, 2);
+        Item arbuz = new Item("Арбуз",20, 8);
+        Item pirog = new Item("Пирог",25, 1);
+        List<Item> list = new ArrayList<>();
+        list.add(gitara);
+        list.add(ruchka);
+        list.add(kruzhka);
+        list.add(butilka);
+        list.add(igrushka);
+        list.add(chasi);
+        list.add(fruit);
+        list.add(arbuz);
+        list.add(pirog);
+        Collections.sort(list, (Item item1, Item item2) ->
+        {
+            return  item2.price / item2.weight - item1.price / item1.weight;
+        });
+
+        return list;
+    }
+    //основной метод для проверки работы программы
+    public static void main(String[] args) {
+        //создаем рюкзак вместимостью 15 единиц
+        Knapsack knapsack = new Knapsack(15);
+            for(Item i: knapsack.getList()){
+                knapsack.capacity -= i.weight;
+                if(knapsack.capacity < 0){
+                    knapsack.capacity += i.weight;
+                    continue;
+                }
+                knapsack.items.add(i);
+            }
+            //выводим на экран начальный набор предметов
+        System.out.println(knapsack.getList());
+            //итоговый набор предметов
+        System.out.println(knapsack.items);
+    }
+}
