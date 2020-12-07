@@ -29,8 +29,8 @@ public class Knapsack {
         //переопределяем метод для отображения необходимой нам информации при проверке результата
         @Override
         public String toString() {
-            return "Item{" + name +
-                    price/weight +
+            return "Item{" + name + "; цена за единицу веса: " +
+                    price/weight + "; вес: " + weight +
                     '}';
         }
     }
@@ -66,6 +66,7 @@ public class Knapsack {
     public static void main(String[] args) {
         //создаем рюкзак вместимостью 15 единиц
         Knapsack knapsack = new Knapsack(15);
+        //в цикле вычитаем из вместимости рюкзака вес предмета
             for(Item i: knapsack.getList()){
                 knapsack.capacity -= i.weight;
                 if(knapsack.capacity < 0){
